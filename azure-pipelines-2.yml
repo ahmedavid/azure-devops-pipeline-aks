@@ -19,6 +19,19 @@ stages:
             repository: 'customapp1'
             command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
-            tags: ${tag}
+            tags: |
+              ${tag}
+              ${Build.SourceVersion}
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)/kube-manifests'
+            Contents: '**'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            OverWrite: true
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'kube-manifests'
+            publishLocation: 'Container'
 
 
