@@ -43,6 +43,5 @@ stages:
         gitHubConnection: 'GitHubConnection'
         context: 'Build'
         state: ${{ if eq(variables['Build.Reason'], 'PullRequest') }}'pending'${{ else }}'success'${{ endif }}
-        description: 'The build is ${{ if eq(variables['Build.Reason'], 'PullRequest') }}in progress${{ else }}succeeded${{ endif }}.'
+        description: ${{ if eq(variables['Build.Reason'], 'PullRequest') }}'The build is in progress.'${{ else }}'The build succeeded.'${{ endif }}
         targetUrl: '$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)'
-
