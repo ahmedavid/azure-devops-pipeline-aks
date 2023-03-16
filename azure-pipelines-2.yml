@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  tag: ${Build.BuildId}
+  tag: $(Build.BuildId)
 
 stages:
   - stage: Build
@@ -20,8 +20,8 @@ stages:
             command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
             tags: |
-              ${tag}
-              ${Build.SourceVersion}
+              $(tag)
+              $(Build.SourceVersion)
         - task: CopyFiles@2
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/kube-manifests'
