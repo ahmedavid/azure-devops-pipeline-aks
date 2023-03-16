@@ -37,11 +37,3 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: GitHubStatus@1
-      displayName: Update GitHub build status
-      inputs:
-        gitHubConnection: 'GitHubConnection'
-        context: 'Build'
-        state: ${{ if eq(variables['Build.Reason'], 'PullRequest') }}'pending'${{ else }}'success'${{ endif }}
-        description: ${{ if eq(variables['Build.Reason'], 'PullRequest') }}'The build is in progress.'${{ else }}'The build succeeded.'${{ endif }}
-        targetUrl: '$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)'
