@@ -1,7 +1,7 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1nginxaks 
+  name: app1nginxaks
 spec:
   replicas: 1
   selector:
@@ -10,10 +10,10 @@ spec:
   template:
     metadata:
       labels:
-        app: app1nginxaks 
+        app: app1nginxaks
     spec:
       containers:
-        - name: app1nginxaks 
-          image: ahmedavid.azurecr.io/app1nginxaks
+        - name: app1nginxaks
+          image: ahmedavid.azurecr.io/customapp1
           ports:
-          - containerPort: 80
+            - containerPort: 80
