@@ -10,7 +10,7 @@ variable "location" {
 
 variable "environment" {
   type    = string
-  default = "qa"
+  default = "dev"
 }
 
 variable "ssh_public_key" {
