@@ -32,24 +32,24 @@ stages:
         displayName: Terraform Install
         inputs:
           terraformVersion: 'latest'
-      - task: TerraformCLI@0
-        displayName: Terraform Init
-        inputs:
-          command: 'init'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
-          backendType: 'azurerm'
-          backendServiceArm: 'arm-sc'
-          backendAzureRmResourceGroupName: 'terraform-storage-rg'
-          backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
-          backendAzureRmContainerName: 'tfstatefiles'
-          backendAzureRmKey: 'aks-base.tfstate'
-          allowTelemetryCollection: false
-      - task: TerraformCLI@0
-        displayName: Terraform Validate
-        inputs:
-          command: 'validate'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
-          allowTelemetryCollection: false
+      # - task: TerraformCLI@0
+      #   displayName: Terraform Init
+      #   inputs:
+      #     command: 'init'
+      #     workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
+      #     backendType: 'azurerm'
+      #     backendServiceArm: 'arm-sc'
+      #     backendAzureRmResourceGroupName: 'terraform-storage-rg'
+      #     backendAzureRmStorageAccountName: 'terraformstatexlrwdrzs'
+      #     backendAzureRmContainerName: 'tfstatefiles'
+      #     backendAzureRmKey: 'aks-base.tfstate'
+      #     allowTelemetryCollection: false
+      # - task: TerraformCLI@0
+      #   displayName: Terraform Validate
+      #   inputs:
+      #     command: 'validate'
+      #     workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
+      #     allowTelemetryCollection: false
 
 # Stage-2: Deploy Stages for Dev & QA
 # Deployment-1: Deploy Dev AKS Cluster
@@ -82,8 +82,10 @@ stages:
                 workingDirectory: '$(Pipeline.Workspace)/infra-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'arm-sc'
-                backendAzureRmResourceGroupName: 'storage-rg'
-                backendAzureRmStorageAccountName: 'ahmedavid'
+                ensureBackend: true
+                backendAzureRmResourceGroupName: 'tarraform-backend-rg'
+                backendAzureRmResourceGroupLocation: 'eastus'
+                backendAzureRmStorageAccountName: 'terraform-storage-ahmedavid'
                 backendAzureRmContainerName: 'aks-deploy-tf-backend'
                 backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
