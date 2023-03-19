@@ -82,9 +82,7 @@ stages:
                 workingDirectory: '$(Pipeline.Workspace)/infra-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'arm-sc'
-                ensureBackend: true
                 backendAzureRmResourceGroupName: 'storage-rg'
-                backendAzureRmResourceGroupLocation: 'eastus'
                 backendAzureRmStorageAccountName: 'ahmedavid'
                 backendAzureRmContainerName: 'aks-deploy-tf-backend'
                 backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
