@@ -27,7 +27,6 @@ stages:
             commandOptions: 'init'
             backendType: 'azurerm'
             backendServiceArm: 'arm-sc'
-            ensureBackend: true
             backendAzureRmResourceGroupName: 'storage_rg'
             backendAzureRmStorageAccountName: 'ahmedavid'
             backendAzureRmContainerName: 'aks-deploy-tf-backend'
