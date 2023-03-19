@@ -31,6 +31,7 @@ stages:
           displayName: Terraform Init
           inputs:
             command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/infra'
             backendType: 'azurerm'
             backendServiceArm: 'arm-sc'
             backendAzureRmResourceGroupName: 'storage_rg'
@@ -67,6 +68,7 @@ stages:
                 displayName: Terraform Init
                 inputs:
                   command: 'init'
+                  workingDirectory: '$(Pipeline.Workspace)/infra'
                   backendType: 'azurerm'
                   backendServiceArm: 'arm-sc'
                   backendAzureRmResourceGroupName: 'storage_rg'
@@ -87,7 +89,7 @@ stages:
                 displayName: Terraform Apply
                 inputs:
                   command: 'apply'
-                  workingDirectory: '''$(Pipeline.Workspace)/infra-out'''
+                  workingDirectory: '$(Pipeline.Workspace)/infra-out'
                   environmentServiceName: 'arm-sc'
                   commandOptions: '$(Pipeline.Workspace)/infra-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                   allowTelemetryCollection: false
