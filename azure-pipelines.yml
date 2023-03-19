@@ -1,0 +1,40 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: TerraformValidate
+    jobs:
+      - job: TerraforValidateJob
+        continueOnError: false
+        steps:
+        - task: PublishPipelineArtifact@1
+          displayName: Publish Artifacts
+          inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)/infra'
+            artifact: 'infra-out'
+            publishLocation: 'pipeline'
+        - task: TerraformInstaller@0
+          displayName: Install latest Terraform
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformCLI@0
+          displayName: Terraform Init
+          inputs:
+            command: 'init'
+            commandOptions: 'init'
+            backendType: 'azurerm'
+            backendServiceArm: 'arm-sc'
+            ensureBackend: true
+            backendAzureRmResourceGroupName: 'storage_rg'
+            backendAzureRmStorageAccountName: 'ahmedavid'
+            backendAzureRmContainerName: 'aks-deploy-tf-backend'
+            backendAzureRmKey: 'terraform.tfstate'
+            allowTelemetryCollection: false
+        - task: TerraformCLI@0
+          displayName: Terraform Validate
+          inputs:
+            command: 'validate'
+            allowTelemetryCollection: false
