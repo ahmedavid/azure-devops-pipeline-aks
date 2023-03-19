@@ -72,6 +72,7 @@ stages:
                   allowTelemetryCollection: false
 
               - task: TerraformCLI@0
+                displayName: Terraform Plan
                 inputs:
                   command: 'plan'
                   workingDirectory: '$(Pipeline.Workspace)/infra'
@@ -79,6 +80,7 @@ stages:
                   commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/infra-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                   allowTelemetryCollection: false
               - task: TerraformCLI@0
+                displayName: Terraform Apply
                 inputs:
                   command: 'apply'
                   workingDirectory: '''$(Pipeline.Workspace)/infra-out'''
