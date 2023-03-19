@@ -24,7 +24,6 @@ stages:
           displayName: Terraform Init
           inputs:
             command: 'init'
-            commandOptions: 'init'
             backendType: 'azurerm'
             backendServiceArm: 'arm-sc'
             backendAzureRmResourceGroupName: 'storage_rg'
