@@ -83,9 +83,9 @@ stages:
                 backendType: 'azurerm'
                 backendServiceArm: 'arm-sc'
                 ensureBackend: true
-                backendAzureRmResourceGroupName: 'tarraform-backend-rg'
+                backendAzureRmResourceGroupName: 'storage-rg'
                 backendAzureRmResourceGroupLocation: 'eastus'
-                backendAzureRmStorageAccountName: 'terraform-storage-ahmedavid'
+                backendAzureRmStorageAccountName: 'ahmedavid'
                 backendAzureRmContainerName: 'aks-deploy-tf-backend'
                 backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
