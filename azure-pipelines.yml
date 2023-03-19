@@ -59,6 +59,10 @@ stages:
                 displayName: Download SSH Key
                 inputs:
                   secureFile: 'terraform-azure.pub'
+              - task: TerraformInstaller@0
+                displayName: Install latest Terraform
+                inputs:
+                  terraformVersion: 'latest'
               - task: TerraformCLI@0
                 displayName: Terraform Init
                 inputs:
