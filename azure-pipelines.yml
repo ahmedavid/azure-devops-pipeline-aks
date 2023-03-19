@@ -3,6 +3,13 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  
+# Define Variables for Environments
+variables:
+- name: DEV_ENVIRONMENT
+  value: dev
+- name: QA_ENVIRONMENT
+  value: qa  
 
 stages:
   - stage: TerraformValidate
@@ -36,3 +43,45 @@ stages:
           inputs:
             command: 'validate'
             allowTelemetryCollection: false
+  - stage: DeployAKSClusters
+    jobs:
+      - deployment: DeployDevAKSCluster
+        displayName: DeployDevAKSCluster
+        pool:
+          vmImage: 'ubuntu-latest'
+        environment: $(DEV_ENVIRONMENT)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: DownloadSecureFile@1
+                name: sshkey
+                displayName: Download SSH Key
+                inputs:
+                  secureFile: 'terraform-azure.pub'
+              - task: TerraformCLI@0
+                displayName: Terraform Init
+                inputs:
+                  command: 'init'
+                  backendType: 'azurerm'
+                  backendServiceArm: 'arm-sc'
+                  backendAzureRmResourceGroupName: 'storage_rg'
+                  backendAzureRmStorageAccountName: 'ahmedavid'
+                  backendAzureRmContainerName: 'aks-deploy-tf-backend'
+                  backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
+                  allowTelemetryCollection: false
+
+              - task: TerraformCLI@0
+                inputs:
+                  command: 'plan'
+                  workingDirectory: '$(Pipeline.Workspace)/infra'
+                  environmentServiceName: 'arm-sc'
+                  commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/infra-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                  allowTelemetryCollection: false
+              - task: TerraformCLI@0
+                inputs:
+                  command: 'apply'
+                  workingDirectory: '''$(Pipeline.Workspace)/infra-out'''
+                  environmentServiceName: 'arm-sc'
+                  commandOptions: '$(Pipeline.Workspace)/infra-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                  allowTelemetryCollection: false
