@@ -85,7 +85,7 @@ stages:
                 backendAzureRmResourceGroupName: 'storage-rg'
                 backendAzureRmStorageAccountName: 'ahmedavid'
                 backendAzureRmContainerName: 'aks-deploy-tf-backend'
-                backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
+                backendAzureRmKey: 'terraform.tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Plan
