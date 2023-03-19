@@ -82,12 +82,10 @@ stages:
                 workingDirectory: '$(Pipeline.Workspace)/infra-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'arm-sc'
-                ensureBackend: true
-                backendAzureRmResourceGroupName: 'tarraform-backend-rg'
-                backendAzureRmResourceGroupLocation: 'eastus'
-                backendAzureRmStorageAccountName: 'terraform-storage-ahmedavid'
+                backendAzureRmResourceGroupName: 'storage-rg'
+                backendAzureRmStorageAccountName: 'ahmedavid'
                 backendAzureRmContainerName: 'aks-deploy-tf-backend'
-                backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
+                backendAzureRmKey: 'terraform.tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Plan
